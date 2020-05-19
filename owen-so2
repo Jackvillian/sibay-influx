@@ -1,0 +1,2 @@
+ * * * * * /usr/local/bin/python3.7 /srv/owencloud.py > /proc/1/fd/1 2>/proc/1/fd/2
+ * * * * * sleep 30 && /usr/local/bin/python3.7 /srv/owencloud.py > /proc/1/fd/1 2>/proc/1/fd/2
