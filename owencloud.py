@@ -25,7 +25,7 @@ else:
 
 
 sess=requests.Session()
-auth_owen=sess.post('https://api.owencloud.ru/v1/auth/open',json={"login":'login',"password":'password'}).json()
+auth_owen=sess.post('https://api.owencloud.ru/v1/auth/open',json={"login":'login',"password":'111'}).json()
 
 def device_list():
     r=sess.post('https://api.owencloud.ru/v1/device/index',headers={'Content-Type':'application/json', 'Authorization': 'Bearer {}'.format(auth_owen['token'])})
@@ -77,15 +77,16 @@ def sensors_task_SO2():
             if p['name'] == "Значение float 1":
                 ids.append(p['id'])
                 param_data=get_param_data(ids)
-                if not "Ошибка" in param_data[0]['values'][0]['f']:
-                    response_json['measurement']="SO2"
-                    tags["id_device"]=dev
-                    tags['street'] = devlist[dev]
-                    response_json['tags']=tags
-                    fields['value'] = float(param_data[0]['values'][0]['f'])
-                    response_json['fields']=fields
-                    utc = datetime.utcfromtimestamp(int(param_data[0]['values'][0]['d']))
-                    response_json['time'] = utc.replace(tzinfo=timezone('UTC')).isoformat()
+                if param_data[0]['values']:
+                    if not "Ошибка" in param_data[0]['values'][0]['f']:
+                        response_json['measurement']="SO2"
+                        tags["id_device"]=dev
+                        tags['street'] = devlist[dev]
+                        response_json['tags']=tags
+                        fields['value'] = float(param_data[0]['values'][0]['f'])
+                        response_json['fields']=fields
+                        utc = datetime.utcfromtimestamp(int(param_data[0]['values'][0]['d']))
+                        response_json['time'] = utc.replace(tzinfo=timezone('UTC')).isoformat()
         response_list.append(response_json)
     for resp in response_list:
         if not resp:
