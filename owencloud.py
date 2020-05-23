@@ -8,10 +8,10 @@ from datetime import datetime
 
 import json
 
-#client = InfluxDBClient(host='influxdb', port=8086)
-#redis_cacher = redis.StrictRedis(host='redis', port=6379, db=1)
-client = InfluxDBClient(host='localhost', port=8086)
-redis_cacher = redis.StrictRedis(host='localhost', port=6379, db=1)
+client = InfluxDBClient(host='influxdb', port=8086)
+redis_cacher = redis.StrictRedis(host='redis', port=6379, db=1)
+#client = InfluxDBClient(host='localhost', port=8086)
+#redis_cacher = redis.StrictRedis(host='localhost', port=6379, db=1)
 dbs=[]
 for db in client.get_list_database():
     dbs.append(db['name'])
@@ -25,7 +25,7 @@ else:
 
 
 sess=requests.Session()
-auth_owen=sess.post('https://api.owencloud.ru/v1/auth/open',json={"login":'login',"password":'111'}).json()
+auth_owen=sess.post('https://api.owencloud.ru/v1/auth/open',json={"login":'login',"password":'111111'}).json()
 
 def device_list():
     r=sess.post('https://api.owencloud.ru/v1/device/index',headers={'Content-Type':'application/json', 'Authorization': 'Bearer {}'.format(auth_owen['token'])})
